@@ -1,38 +1,55 @@
-.App {
-  text-align: center;
+.calendar {
+    max-width: 640px;
+    /*margin: 0 auto;*/
+    padding: 20px 0;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.calendar__head {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 48px 46px 48px;
+    align-items: center;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.calendar__head-btn {
+    background-color: transparent;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.calendar__head-btn svg {
+    width: 28px;
+    height: 28px;
 }
-
-.App-link {
-  color: #61dafb;
+.calendar__head-btn svg path {
+    fill: red;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.calendar__title {
+    font-size: 36px;
+    font-weight: 300;
+    word-spacing: 5px;
+}
+.calendar__date {
+    padding: 17px 10px 10px 80px;
+    background-color: #f6f6f6;
+    border-top: 2px solid #ebebeb;
+}
+.calendar__block {
+    display: flex;
+    justify-content: space-around;
+    font-weight: 600;
+}
+.calendar__days {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px;
+    font-size: 28px;
+}
+.calendar__days span {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.calendar__days span.active {
+    background-color: red;
+    border-radius: 50%;
+    color: white;
 }
