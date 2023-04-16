@@ -37,6 +37,8 @@ function App() {
         '00:00',
     ];
 
+    const block = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
     useEffect(() => {
         const m = 24;
         const arr = new Array(m);
@@ -87,13 +89,9 @@ function App() {
             </div>
             <div className="calendar__date">
                 <div className="calendar__block">
-                    <span>M</span>
-                    <span>T</span>
-                    <span>W</span>
-                    <span>T</span>
-                    <span>F</span>
-                    <span>S</span>
-                    <span>S</span>
+                    {block.map((item, index) => (
+                        <span key={index}>{item}</span>
+                    ))}
                 </div>
                 <div className="calendar__days">
                     <span>25</span>
