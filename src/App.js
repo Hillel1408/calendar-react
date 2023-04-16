@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Tr } from './components/Tr';
+import { Td } from './components/Td';
 import './App.css';
 import './css/null.css';
 
@@ -45,6 +45,14 @@ function App() {
         }
         setTasks(arr);
     }, []);
+
+    const setValue = (value) => {
+        tasks[trActive][tdActive] = value;
+        setTrActive(null);
+        setTdActive(null);
+        setActive('');
+    };
+
     return (
         <div className="calendar">
             <div className="calendar__head">
@@ -58,8 +66,7 @@ function App() {
                                 active
                             );
                             if (value !== null) {
-                                tasks[trActive][tdActive] = value;
-                                setActive(value);
+                                setValue(value);
                             }
                         }}
                     >
@@ -112,17 +119,21 @@ function App() {
                 <table className="calendar__table">
                     <tbody>
                         {tasks &&
-                            tasks.map((item, index) => (
-                                <Tr
-                                    key={index}
-                                    item={item}
-                                    trIndex={index}
-                                    setTrActive={setTrActive}
-                                    setTdActive={setTdActive}
-                                    trActive={trActive}
-                                    tdActive={tdActive}
-                                    setActive={setActive}
-                                />
+                            tasks.map((item, trIndex) => (
+                                <tr>
+                                    {item.map((td, tdIndex) => (
+                                        <Td
+                                            td={td}
+                                            trIndex={trIndex}
+                                            tdIndex={tdIndex}
+                                            setTrActive={setTrActive}
+                                            setTdActive={setTdActive}
+                                            trActive={trActive}
+                                            tdActive={tdActive}
+                                            setActive={setActive}
+                                        />
+                                    ))}
+                                </tr>
                             ))}
                     </tbody>
                 </table>
@@ -132,10 +143,7 @@ function App() {
                 {active && (
                     <button
                         onClick={() => {
-                            tasks[trActive][tdActive] = '';
-                            setTrActive(null);
-                            setTdActive(null);
-                            setActive('');
+                            setValue('');
                         }}
                     >
                         Delete

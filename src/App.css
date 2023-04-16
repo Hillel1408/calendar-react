@@ -1,5 +1,5 @@
 #root {
-    padding: 20px 0;
+    padding: 20px 10px;
 }
 .calendar {
     max-width: 640px;
@@ -52,7 +52,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
 }
 .calendar__days span.active {
     background-color: red;
