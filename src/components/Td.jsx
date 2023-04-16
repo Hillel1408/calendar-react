@@ -1,13 +1,24 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 
-function Td({ td }) {
-    const [selected, setSelected] = useState(false);
-
+function Td({
+    td,
+    trIndex,
+    tdIndex,
+    setTrActive,
+    setTdActive,
+    trActive,
+    tdActive,
+}) {
     return (
         <td
-            onClick={() => setSelected(!selected)}
-            className={classNames(td && 'active', selected && 'selected')}
+            onClick={() => {
+                setTrActive(trIndex);
+                setTdActive(tdIndex);
+            }}
+            className={classNames(
+                trActive === trIndex && tdIndex === tdActive && 'selected'
+            )}
         >
             <span></span>
         </td>

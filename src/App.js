@@ -5,6 +5,8 @@ import './css/null.css';
 
 function App() {
     const [tasks, setTasks] = useState('');
+    const [trActive, setTrActive] = useState('');
+    const [tdActive, setTdActive] = useState('');
 
     const time = [
         '00:00',
@@ -96,7 +98,15 @@ function App() {
                     <tbody>
                         {tasks &&
                             tasks.map((item, index) => (
-                                <Tr key={index} item={item} />
+                                <Tr
+                                    key={index}
+                                    item={item}
+                                    trIndex={index}
+                                    setTrActive={setTrActive}
+                                    setTdActive={setTdActive}
+                                    trActive={trActive}
+                                    tdActive={tdActive}
+                                />
                             ))}
                     </tbody>
                 </table>
