@@ -143,9 +143,14 @@
     background-color: #f6f6f6;
     border-top: 2px solid #ebebeb;
     padding: 30px 45px;
-    font-size: 28px;
-    color: red;
     margin-top: -13px;
     z-index: 0;
     position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+.calendar__footer span,
+.calendar__footer button {
+    color: red;
+    font-size: 28px;
 }

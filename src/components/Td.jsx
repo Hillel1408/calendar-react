@@ -9,12 +9,14 @@ function Td({
     setTdActive,
     trActive,
     tdActive,
+    setActive,
 }) {
     return (
         <td
             onClick={() => {
                 setTrActive(trIndex);
                 setTdActive(tdIndex);
+                setActive(td);
             }}
             className={classNames(
                 td && 'active',

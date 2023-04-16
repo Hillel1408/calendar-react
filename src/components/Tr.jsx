@@ -1,7 +1,15 @@
 import { useEffect } from 'react';
 import { Td } from './Td';
 
-function Tr({ item, trIndex, setTrActive, setTdActive, trActive, tdActive }) {
+function Tr({
+    item,
+    trIndex,
+    setTrActive,
+    setTdActive,
+    trActive,
+    tdActive,
+    setActive,
+}) {
     return (
         <tr>
             {item.map((td, tdIndex) => (
@@ -13,6 +21,7 @@ function Tr({ item, trIndex, setTrActive, setTdActive, trActive, tdActive }) {
                     setTdActive={setTdActive}
                     trActive={trActive}
                     tdActive={tdActive}
+                    setActive={setActive}
                 />
             ))}
         </tr>
