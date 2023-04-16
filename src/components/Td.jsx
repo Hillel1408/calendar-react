@@ -17,6 +17,7 @@ function Td({
                 setTdActive(tdIndex);
             }}
             className={classNames(
+                td && 'active',
                 trActive === trIndex && tdIndex === tdActive && 'selected'
             )}
         >
