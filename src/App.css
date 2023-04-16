@@ -1,7 +1,12 @@
+#root {
+    padding: 20px 0;
+}
 .calendar {
     max-width: 640px;
-    /*margin: 0 auto;*/
-    padding: 20px 0;
+    margin: 0 auto;
+    padding-top: 20px;
+    border: 2px solid #ebebeb;
+    border-radius: 5px;
 }
 .calendar__head {
     display: flex;
