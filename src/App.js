@@ -57,8 +57,10 @@ function App() {
                                 'Введите ваше событие:',
                                 active
                             );
-                            if (value !== null)
+                            if (value !== null) {
                                 tasks[trActive][tdActive] = value;
+                                setActive(value);
+                            }
                         }}
                     >
                         <svg
@@ -127,7 +129,18 @@ function App() {
             </div>
             <div className="calendar__footer">
                 <span>Today</span>
-                {active && <button>Delete</button>}
+                {active && (
+                    <button
+                        onClick={() => {
+                            tasks[trActive][tdActive] = '';
+                            setTrActive(null);
+                            setTdActive(null);
+                            setActive('');
+                        }}
+                    >
+                        Delete
+                    </button>
+                )}
             </div>
         </div>
     );
