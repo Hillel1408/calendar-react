@@ -120,9 +120,10 @@ function App() {
                     <tbody>
                         {tasks &&
                             tasks.map((item, trIndex) => (
-                                <tr>
+                                <tr key={trIndex}>
                                     {item.map((td, tdIndex) => (
                                         <Td
+                                            key={tdIndex}
                                             td={td}
                                             trIndex={trIndex}
                                             tdIndex={tdIndex}

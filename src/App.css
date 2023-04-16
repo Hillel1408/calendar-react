@@ -104,9 +104,11 @@
 }
 .calendar__table tr td.active span {
     background-color: #ebecfe;
+    cursor: grab;
 }
 .calendar__table tr td.selected span {
     background-color: #b3b7fd;
+    cursor: default;
 }
 .calendar__table {
     margin-top: -2px;
