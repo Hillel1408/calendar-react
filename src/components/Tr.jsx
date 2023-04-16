@@ -5,7 +5,7 @@ function Tr({ item }) {
     return (
         <tr>
             {item.map((td) => (
-                <Td />
+                <Td td={td} />
             ))}
         </tr>
     );
