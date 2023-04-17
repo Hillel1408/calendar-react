@@ -10,6 +10,7 @@ function App() {
     const [active, setActive] = useState('');
     const [count, setCount] = useState(0);
     const [days, setDays] = useState('');
+    const [amount, setAmount] = useState('');
 
     const time = [
         '00:00',
@@ -90,6 +91,21 @@ function App() {
     };
 
     const func = (date) => {
+        const month = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+        ];
+        setAmount(`${month[date.getMonth()]}` + ` ${date.getFullYear()}`);
         return [
             date.getDay(),
             date.getDate(),
@@ -160,7 +176,7 @@ function App() {
                         className="calendar__prev"
                         onClick={() => prevClickHandler()}
                     ></button>
-                    <span className="calendar__month-year">March 2019</span>
+                    <span className="calendar__month-year">{amount}</span>
                     <button
                         className="calendar__next"
                         onClick={() => nextClickHandler()}
