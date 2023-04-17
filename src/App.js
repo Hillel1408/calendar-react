@@ -42,14 +42,29 @@ function App() {
 
     const block = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
+    const month = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
+
     useEffect(() => {
         const m = 24;
         const arr = new Array(m);
+        const date = new Date();
         for (var i = 0; i < m; i++) {
             arr[i] = ['', '', '', '', '', '', ''];
         }
         setTasks(arr);
-        const date = new Date();
         setDays(getWeek(...func(date)));
     }, []);
 
@@ -116,20 +131,6 @@ function App() {
     };
 
     const func = (date) => {
-        const month = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December',
-        ];
         setAmount(`${month[date.getMonth()]}` + ` ${date.getFullYear()}`);
         return [
             date.getDay(),
