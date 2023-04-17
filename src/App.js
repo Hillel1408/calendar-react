@@ -55,6 +55,31 @@ function App() {
 
     const setValue = (value) => {
         tasks[trActive][tdActive] = value;
+        const storageItem = localStorage.getItem('items');
+        const item = {
+            date: days[tdActive][0].toString(),
+            time: trActive,
+            value: value,
+        };
+        if (storageItem) {
+            const storage = JSON.parse(storageItem);
+            const index = storage.findIndex(
+                (item) =>
+                    item.date == days[tdActive][0] && item.time === trActive
+            );
+            if (index === -1) {
+                localStorage.setItem(
+                    'items',
+                    JSON.stringify([...storage, item])
+                );
+            } else {
+                storage.splice(index, 1);
+                localStorage.setItem(
+                    'items',
+                    JSON.stringify(value ? [...storage, item] : [...storage])
+                );
+            }
+        } else localStorage.setItem('items', JSON.stringify([item]));
         setTrActive(null);
         setTdActive(null);
         setActive('');
