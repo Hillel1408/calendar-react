@@ -8,6 +8,8 @@ function App() {
     const [trActive, setTrActive] = useState(null);
     const [tdActive, setTdActive] = useState(null);
     const [active, setActive] = useState('');
+    const [count, setCount] = useState(0);
+    const [days, setDays] = useState('');
 
     const time = [
         '00:00',
@@ -46,6 +48,8 @@ function App() {
             arr[i] = ['', '', '', '', '', '', ''];
         }
         setTasks(arr);
+        const date = new Date();
+        setDays(getWeek(...func(date)));
     }, []);
 
     const setValue = (value) => {
@@ -53,6 +57,58 @@ function App() {
         setTrActive(null);
         setTdActive(null);
         setActive('');
+    };
+
+    const getWeek = (weekDay, monthDay, month, year) => {
+        const countDayOnMonth = [
+            31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+        ];
+        const result = [];
+        let countMonthDay;
+
+        if (weekDay > 1) {
+            countMonthDay = monthDay - (weekDay - 1);
+        } else if (weekDay === 0) {
+            countMonthDay = monthDay - 6;
+        } else {
+            countMonthDay = monthDay;
+        }
+        for (let i = 0; i < 7; i++) {
+            if (countMonthDay + i > countDayOnMonth[month]) {
+                const count = 7 - i;
+                for (let j = 1; j <= count; j++)
+                    result.push([new Date(year, month, j), j]);
+                break;
+            } else {
+                result.push([
+                    new Date(year, month, countMonthDay + i),
+                    countMonthDay + i,
+                ]);
+            }
+        }
+        return result;
+    };
+
+    const func = (date) => {
+        return [
+            date.getDay(),
+            date.getDate(),
+            date.getMonth(),
+            date.getFullYear(),
+        ];
+    };
+
+    const prevClickHandler = () => {
+        const date = new Date();
+        date.setDate(date.getDate() + count - 7);
+        setDays(getWeek(...func(date)));
+        setCount(count - 7);
+    };
+    const nextClickHandler = () => {
+        const date = new Date();
+        date.setDate(date.getDate() + count + 7);
+        setDays(getWeek(...func(date)));
+        setCount(count + 7);
     };
 
     return (
@@ -94,18 +150,21 @@ function App() {
                     ))}
                 </div>
                 <div className="calendar__days">
-                    <span>25</span>
-                    <span>26</span>
-                    <span>27</span>
-                    <span>28</span>
-                    <span className="active">29</span>
-                    <span>30</span>
-                    <span>31</span>
+                    {days &&
+                        days.map((item, index) => (
+                            <span key={index}>{item[1]}</span>
+                        ))}
                 </div>
                 <div className="calendar__flex">
-                    <button className="calendar__prev"></button>
+                    <button
+                        className="calendar__prev"
+                        onClick={() => prevClickHandler()}
+                    ></button>
                     <span className="calendar__month-year">March 2019</span>
-                    <button className="calendar__next"></button>
+                    <button
+                        className="calendar__next"
+                        onClick={() => nextClickHandler()}
+                    ></button>
                 </div>
             </div>
             <div className="calendar__tasks">
