@@ -84,6 +84,13 @@ function App() {
         setDays(arr);
         func2(arr);
         setToday(date);
+        const closeEsc = (e) => {
+            if (e.keyCode === 27) {
+                reset();
+            }
+        };
+        window.addEventListener('keydown', closeEsc);
+        return () => window.removeEventListener('keydown', closeEsc);
     }, []);
 
     const setValue = (value) => {
@@ -301,6 +308,7 @@ function App() {
                                             dragLeaveHandler={dragLeaveHandler}
                                             dragStartHandler={dragStartHandler}
                                             dropHandler={dropHandler}
+                                            reset={reset}
                                         />
                                     ))}
                                 </tr>
