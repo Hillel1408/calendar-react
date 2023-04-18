@@ -57,15 +57,28 @@ function App() {
         'December',
     ];
 
-    useEffect(() => {
+    const func2 = (arr2) => {
         const m = 24;
         const arr = new Array(m);
-        const date = new Date();
         for (var i = 0; i < m; i++) {
             arr[i] = ['', '', '', '', '', '', ''];
         }
+        const storageItem = localStorage.getItem('items');
+        if (storageItem) {
+            const storage = JSON.parse(storageItem);
+            storage.forEach((element) => {
+                const index = arr2.findIndex((item) => item[0] == element.date);
+                arr[element.time][index] = element.value;
+            });
+        }
         setTasks(arr);
-        setDays(getWeek(...func(date)));
+    };
+
+    useEffect(() => {
+        const date = new Date();
+        const arr = getWeek(...func(date));
+        setDays(arr);
+        func2(arr);
     }, []);
 
     const setValue = (value) => {
@@ -143,13 +156,17 @@ function App() {
     const prevClickHandler = () => {
         const date = new Date();
         date.setDate(date.getDate() + count - 7);
-        setDays(getWeek(...func(date)));
+        const arr = getWeek(...func(date));
+        setDays(arr);
+        func2(arr);
         setCount(count - 7);
     };
     const nextClickHandler = () => {
         const date = new Date();
         date.setDate(date.getDate() + count + 7);
-        setDays(getWeek(...func(date)));
+        const arr = getWeek(...func(date));
+        setDays(arr);
+        func2(arr);
         setCount(count + 7);
     };
 
