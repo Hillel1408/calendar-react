@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import { Td } from './components/Td';
 import './App.css';
 import './css/null.css';
@@ -11,6 +12,7 @@ function App() {
     const [count, setCount] = useState(0);
     const [days, setDays] = useState('');
     const [amount, setAmount] = useState('');
+    const [today, setToday] = useState('');
 
     const time = [
         '00:00',
@@ -79,6 +81,7 @@ function App() {
         const arr = getWeek(...func(date));
         setDays(arr);
         func2(arr);
+        setToday(date);
     }, []);
 
     const setValue = (value) => {
@@ -93,7 +96,7 @@ function App() {
             const storage = JSON.parse(storageItem);
             const index = storage.findIndex(
                 (item) =>
-                    item.date == days[tdActive][0] && item.time === trActive
+                    item.date === days[tdActive][0] && item.time === trActive
             );
             if (index === -1) {
                 localStorage.setItem(
@@ -108,9 +111,7 @@ function App() {
                 );
             }
         } else localStorage.setItem('items', JSON.stringify([item]));
-        setTrActive(null);
-        setTdActive(null);
-        setActive('');
+        reset();
     };
 
     const getWeek = (weekDay, monthDay, month, year) => {
@@ -143,8 +144,15 @@ function App() {
         return result;
     };
 
+    const reset = () => {
+        setTrActive(null);
+        setTdActive(null);
+        setActive('');
+    };
+
     const func = (date) => {
         setAmount(`${month[date.getMonth()]}` + ` ${date.getFullYear()}`);
+        reset();
         return [
             date.getDay(),
             date.getDate(),
@@ -210,8 +218,17 @@ function App() {
                 </div>
                 <div className="calendar__days">
                     {days &&
+                        today &&
                         days.map((item, index) => (
-                            <span key={index}>{item[1]}</span>
+                            <span
+                                key={index}
+                                className={classNames(
+                                    item[0].toDateString() ===
+                                        today.toDateString() && 'active'
+                                )}
+                            >
+                                {item[1]}
+                            </span>
                         ))}
                 </div>
                 <div className="calendar__flex">
