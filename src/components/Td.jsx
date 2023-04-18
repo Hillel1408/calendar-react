@@ -29,11 +29,7 @@ function Td({
             )}
         >
             <span
-                draggable={
-                    trActive === trIndex && tdIndex === tdActive
-                        ? ''
-                        : draggable
-                }
+                draggable={draggable}
                 onDragOver={(e) => dragOverHandler(e)}
                 onDragLeave={(e) => dragLeaveHandler(e)}
                 onDragStart={(e) => dragStartHandler(e, trIndex, tdIndex)}

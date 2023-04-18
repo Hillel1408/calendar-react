@@ -197,6 +197,7 @@ function App() {
     };
 
     const dragStartHandler = (e, trIndex, tdIndex) => {
+        reset();
         setCurrentTr(trIndex);
         setCurrentTd(tdIndex);
     };
