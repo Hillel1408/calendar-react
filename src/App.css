@@ -110,6 +110,9 @@
     background-color: #b3b7fd;
     cursor: default;
 }
+.calendar__table tr td span.grey {
+    background-color: grey;
+}
 .calendar__table {
     margin-top: -2px;
     margin-left: 80px;

@@ -13,6 +13,8 @@ function App() {
     const [days, setDays] = useState('');
     const [amount, setAmount] = useState('');
     const [today, setToday] = useState('');
+    const [currentTr, setCurrentTr] = useState('');
+    const [currentTd, setCurrentTd] = useState('');
 
     const time = [
         '00:00',
@@ -178,6 +180,34 @@ function App() {
         setCount(count + 7);
     };
 
+    const dragOverHandler = (e) => {
+        e.preventDefault();
+        e.currentTarget.classList.add('grey');
+    };
+
+    const dragLeaveHandler = (e) => {
+        e.currentTarget.classList.remove('grey');
+    };
+
+    const dragStartHandler = (e, trIndex, tdIndex) => {
+        setCurrentTr(trIndex);
+        setCurrentTd(tdIndex);
+    };
+
+    const dragEndHandler = (e) => {
+        e.currentTarget.classList.remove('grey');
+    };
+
+    const dropHandler = (e, trIndex, tdIndex) => {
+        e.preventDefault();
+        const clone = structuredClone(tasks);
+        const a = clone[trIndex][tdIndex];
+        clone[trIndex][tdIndex] = clone[currentTr][currentTd];
+        clone[currentTr][currentTd] = a;
+        setTasks(clone);
+        e.currentTarget.classList.remove('grey');
+    };
+
     return (
         <div className="calendar">
             <div className="calendar__head">
@@ -265,6 +295,12 @@ function App() {
                                             trActive={trActive}
                                             tdActive={tdActive}
                                             setActive={setActive}
+                                            dragEndHandler={dragEndHandler}
+                                            draggable={true}
+                                            dragOverHandler={dragOverHandler}
+                                            dragLeaveHandler={dragLeaveHandler}
+                                            dragStartHandler={dragStartHandler}
+                                            dropHandler={dropHandler}
                                         />
                                     ))}
                                 </tr>

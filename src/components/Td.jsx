@@ -9,6 +9,12 @@ function Td({
     trActive,
     tdActive,
     setActive,
+    dragLeaveHandler,
+    dragEndHandler,
+    dragOverHandler,
+    dragStartHandler,
+    draggable,
+    dropHandler,
 }) {
     return (
         <td
@@ -22,7 +28,18 @@ function Td({
                 trActive === trIndex && tdIndex === tdActive && 'selected'
             )}
         >
-            <span></span>
+            <span
+                draggable={
+                    trActive === trIndex && tdIndex === tdActive
+                        ? ''
+                        : draggable
+                }
+                onDragOver={(e) => dragOverHandler(e)}
+                onDragLeave={(e) => dragLeaveHandler(e)}
+                onDragStart={(e) => dragStartHandler(e, trIndex, tdIndex)}
+                onDragEnd={(e) => dragEndHandler(e)}
+                onDrop={(e) => dropHandler(e, trIndex, tdIndex)}
+            ></span>
         </td>
     );
 }
