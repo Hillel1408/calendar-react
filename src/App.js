@@ -206,6 +206,36 @@ function App() {
         e.currentTarget.classList.remove('grey');
     };
 
+    const rewriteStorage = (tdIndex, trIndex, clone) => {
+        const storageItem = localStorage.getItem('items');
+        if (storageItem) {
+            const storage = JSON.parse(storageItem);
+            const index = storage.findIndex(
+                (item) =>
+                    item.date === days[currentTd][0].toString() &&
+                    item.time === currentTr
+            );
+            storage[index] = {
+                date: days[tdIndex][0].toString(),
+                time: trIndex,
+                value: clone[trIndex][tdIndex],
+            };
+            if (clone[currentTr][currentTd]) {
+                const index = storage.findIndex(
+                    (item) =>
+                        item.date === days[tdIndex][0].toString() &&
+                        item.time === trIndex
+                );
+                storage[index] = {
+                    date: days[currentTd][0].toString(),
+                    time: currentTr,
+                    value: clone[currentTr][currentTd],
+                };
+            }
+            localStorage.setItem('items', JSON.stringify([...storage]));
+        }
+    };
+
     const dropHandler = (e, trIndex, tdIndex) => {
         e.preventDefault();
         const clone = structuredClone(tasks);
@@ -214,22 +244,7 @@ function App() {
         clone[currentTr][currentTd] = a;
         setTasks(clone);
         e.currentTarget.classList.remove('grey');
-        const storageItem = localStorage.getItem('items');
-        const item = {
-            date: days[tdIndex][0].toString(),
-            time: trIndex,
-            value: clone[trIndex][tdIndex],
-        };
-        if (storageItem) {
-            const storage = JSON.parse(storageItem);
-            const index = storage.findIndex(
-                (item) =>
-                    item.date === days[currentTd][0].toString() &&
-                    item.time === currentTr
-            );
-            storage[index] = item;
-            localStorage.setItem('items', JSON.stringify([...storage]));
-        }
+        rewriteStorage(tdIndex, trIndex, clone);
     };
 
     return (
