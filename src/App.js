@@ -214,6 +214,22 @@ function App() {
         clone[currentTr][currentTd] = a;
         setTasks(clone);
         e.currentTarget.classList.remove('grey');
+        const storageItem = localStorage.getItem('items');
+        const item = {
+            date: days[tdIndex][0].toString(),
+            time: trIndex,
+            value: clone[trIndex][tdIndex],
+        };
+        if (storageItem) {
+            const storage = JSON.parse(storageItem);
+            const index = storage.findIndex(
+                (item) =>
+                    item.date === days[currentTd][0].toString() &&
+                    item.time === currentTr
+            );
+            storage[index] = item;
+            localStorage.setItem('items', JSON.stringify([...storage]));
+        }
     };
 
     return (

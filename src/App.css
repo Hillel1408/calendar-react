@@ -108,7 +108,6 @@
 }
 .calendar__table tr td.selected span {
     background-color: #b3b7fd;
-    cursor: default;
 }
 .calendar__table tr td span.grey {
     background-color: grey;
