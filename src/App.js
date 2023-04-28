@@ -82,6 +82,32 @@ const CalendarDays = styled.div`
     }
 `;
 
+const CalendarNext = styled.button`
+    background-color: transparent;
+    &:before {
+        content: '';
+        display: block;
+        width: 14px;
+        height: 14px;
+        border-top: 3px solid red;
+        border-right: 3px solid red;
+        transform: rotate(-135deg);
+    }
+`;
+
+const CalendarPrev = styled.button`
+    background-color: transparent;
+    &:before {
+        content: '';
+        display: block;
+        width: 14px;
+        height: 14px;
+        border-top: 3px solid red;
+        border-right: 3px solid red;
+        transform: rotate(45deg);
+    }
+`;
+
 function App() {
     const [tasks, setTasks] = useState('');
     const [trActive, setTrActive] = useState(null);
@@ -281,6 +307,7 @@ function App() {
     };
 
     const getWeek = (weekDay, monthDay, month, year) => {
+        console.log(weekDay, monthDay, month, year);
         const countDayOnMonth = [
             31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
         ];
@@ -294,6 +321,7 @@ function App() {
         } else {
             countMonthDay = monthDay;
         }
+        console.log(weekDay, countMonthDay);
         for (let i = 0; i < 7; i++) {
             if (countMonthDay + i > countDayOnMonth[month]) {
                 const count = 7 - i;
@@ -378,15 +406,13 @@ function App() {
                         ))}
                 </CalendarDays>
                 <div className="calendar__flex">
-                    <button
-                        className="calendar__prev"
+                    <CalendarNext
                         onClick={() => prevClickHandler()}
-                    ></button>
+                    ></CalendarNext>
                     <span className="calendar__month-year">{amount}</span>
-                    <button
-                        className="calendar__next"
+                    <CalendarPrev
                         onClick={() => nextClickHandler()}
-                    ></button>
+                    ></CalendarPrev>
                 </div>
             </CalendarDate>
             <div className="calendar__tasks">

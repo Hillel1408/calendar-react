@@ -1,22 +1,3 @@
-.calendar__next,
-.calendar__prev {
-    background-color: transparent;
-}
-.calendar__next:before,
-.calendar__prev:before {
-    content: '';
-    display: block;
-    width: 14px;
-    height: 14px;
-    border-top: 3px solid red;
-    border-right: 3px solid red;
-}
-.calendar__next:before {
-    transform: rotate(45deg);
-}
-.calendar__prev:before {
-    transform: rotate(-135deg);
-}
 .calendar__flex {
     display: flex;
     justify-content: space-between;
