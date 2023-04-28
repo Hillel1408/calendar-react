@@ -31,6 +31,57 @@ const CalendarHeadBtn = styled.button`
     }
 `;
 
+const CalendarTitle = styled.h1`
+    font-size: 36px;
+    font-weight: 300;
+    word-spacing: 5px;
+    @media (max-width: 480px) {
+        font-size: 26px;
+    }
+`;
+
+const CalendarDate = styled.div`
+    padding: 17px 10px 10px 80px;
+    background-color: #f6f6f6;
+    border-top: 2px solid #ebebeb;
+    border-bottom: 2px solid #ebebeb;
+    @media (max-width: 480px) {
+        padding: 17px 10px 10px 60px;
+    }
+`;
+
+const CalendarBlock = styled.div`
+    display: flex;
+    justify-content: space-around;
+    font-weight: 600;
+`;
+
+const CalendarDays = styled.div`
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px;
+    font-size: 28px;
+    & span {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &.active {
+            background-color: red;
+            border-radius: 50%;
+            color: white;
+        }
+        @media (max-width: 480px) {
+            width: 40px;
+            height: 40px;
+        }
+    }
+    @media (max-width: 480px) {
+        font-size: 20px;
+    }
+`;
+
 function App() {
     const [tasks, setTasks] = useState('');
     const [trActive, setTrActive] = useState(null);
@@ -277,7 +328,7 @@ function App() {
     return (
         <Calendar>
             <CalendarHead>
-                <h1 className="calendar__title">Interview Calendar</h1>
+                <CalendarTitle>Interview Calendar</CalendarTitle>
                 {trActive !== null && tdActive !== null && (
                     <CalendarHeadBtn
                         onClick={() => {
@@ -305,13 +356,13 @@ function App() {
                     </CalendarHeadBtn>
                 )}
             </CalendarHead>
-            <div className="calendar__date">
-                <div className="calendar__block">
+            <CalendarDate>
+                <CalendarBlock>
                     {daysWeek.map((item, index) => (
                         <span key={index}>{item}</span>
                     ))}
-                </div>
-                <div className="calendar__days">
+                </CalendarBlock>
+                <CalendarDays>
                     {days &&
                         today &&
                         days.map((item, index) => (
@@ -325,7 +376,7 @@ function App() {
                                 {item[1]}
                             </span>
                         ))}
-                </div>
+                </CalendarDays>
                 <div className="calendar__flex">
                     <button
                         className="calendar__prev"
@@ -337,7 +388,7 @@ function App() {
                         onClick={() => nextClickHandler()}
                     ></button>
                 </div>
-            </div>
+            </CalendarDate>
             <div className="calendar__tasks">
                 <div className="calendar__time">
                     {time.map((item, index) => (
