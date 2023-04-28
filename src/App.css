@@ -1,29 +1,3 @@
-#root {
-    padding: 20px 10px;
-}
-.calendar {
-    max-width: 640px;
-    margin: 0 auto;
-    padding-top: 20px;
-    border: 2px solid #ebebeb;
-    border-radius: 5px;
-}
-.calendar__head {
-    display: flex;
-    justify-content: space-between;
-    padding: 25px 48px 46px 48px;
-    align-items: center;
-}
-.calendar__head-btn {
-    background-color: transparent;
-}
-.calendar__head-btn svg {
-    width: 28px;
-    height: 28px;
-}
-.calendar__head-btn svg path {
-    fill: red;
-}
 .calendar__title {
     font-size: 36px;
     font-weight: 300;
@@ -137,10 +111,10 @@
     font-weight: 600;
 }
 .calendar__time span:first-child {
-    transform: none;
+    transform: translateY(10px);
 }
 .calendar__time span:last-child {
-    transform: none;
+    transform: translateY(-10px);
 }
 .calendar__footer {
     background-color: #f6f6f6;
@@ -156,4 +130,28 @@
 .calendar__footer button {
     color: red;
     font-size: 28px;
+}
+@media (max-width: 480px) {
+    .calendar__title {
+        font-size: 26px;
+    }
+    .calendar__days {
+        font-size: 20px;
+    }
+    .calendar__days span {
+        width: 40px;
+        height: 40px;
+    }
+    .calendar__time span {
+        font-size: 14px;
+    }
+    .calendar__date {
+        padding: 17px 10px 10px 60px;
+    }
+    .calendar__table {
+        margin-left: 60px;
+    }
+    .calendar__month-year {
+        font-size: 18px;
+    }
 }

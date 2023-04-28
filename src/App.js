@@ -1,8 +1,35 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Td } from './components/Td';
+import styled from 'styled-components';
 import './App.css';
 import './css/null.css';
+
+const Calendar = styled.div`
+    max-width: 640px;
+    margin: 0 auto;
+    padding-top: 20px;
+    border: 2px solid #ebebeb;
+    border-radius: 5px;
+`;
+
+const CalendarHead = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 48px 46px 48px;
+    align-items: center;
+`;
+
+const CalendarHeadBtn = styled.button`
+    background-color: transparent;
+    & svg {
+        width: 28px;
+        height: 28px;
+        & path {
+            fill: red;
+        }
+    }
+`;
 
 function App() {
     const [tasks, setTasks] = useState('');
@@ -44,7 +71,7 @@ function App() {
         '00:00',
     ];
 
-    const block = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    const daysWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
     const month = [
         'January',
@@ -60,38 +87,6 @@ function App() {
         'November',
         'December',
     ];
-
-    const func2 = (arr2) => {
-        const m = 24;
-        const arr = new Array(m);
-        for (var i = 0; i < m; i++) {
-            arr[i] = ['', '', '', '', '', '', ''];
-        }
-        const storageItem = localStorage.getItem('items');
-        if (storageItem) {
-            const storage = JSON.parse(storageItem);
-            storage.forEach((element) => {
-                const index = arr2.findIndex((item) => item[0] == element.date);
-                arr[element.time][index] = element.value;
-            });
-        }
-        setTasks(arr);
-    };
-
-    useEffect(() => {
-        const date = new Date();
-        const arr = getWeek(...func(date));
-        setDays(arr);
-        func2(arr);
-        setToday(date);
-        const closeEsc = (e) => {
-            if (e.keyCode === 27) {
-                reset();
-            }
-        };
-        window.addEventListener('keydown', closeEsc);
-        return () => window.removeEventListener('keydown', closeEsc);
-    }, []);
 
     const setValue = (value) => {
         tasks[trActive][tdActive] = value;
@@ -123,36 +118,6 @@ function App() {
         reset();
     };
 
-    const getWeek = (weekDay, monthDay, month, year) => {
-        const countDayOnMonth = [
-            31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
-        ];
-        const result = [];
-        let countMonthDay;
-
-        if (weekDay > 1) {
-            countMonthDay = monthDay - (weekDay - 1);
-        } else if (weekDay === 0) {
-            countMonthDay = monthDay - 6;
-        } else {
-            countMonthDay = monthDay;
-        }
-        for (let i = 0; i < 7; i++) {
-            if (countMonthDay + i > countDayOnMonth[month]) {
-                const count = 7 - i;
-                for (let j = 1; j <= count; j++)
-                    result.push([new Date(year, month, j), j]);
-                break;
-            } else {
-                result.push([
-                    new Date(year, month, countMonthDay + i),
-                    countMonthDay + i,
-                ]);
-            }
-        }
-        return result;
-    };
-
     const reset = () => {
         setTrActive(null);
         setTdActive(null);
@@ -175,7 +140,7 @@ function App() {
         date.setDate(date.getDate() + count - 7);
         const arr = getWeek(...func(date));
         setDays(arr);
-        func2(arr);
+        getTasks(arr);
         setCount(count - 7);
     };
     const nextClickHandler = () => {
@@ -183,27 +148,8 @@ function App() {
         date.setDate(date.getDate() + count + 7);
         const arr = getWeek(...func(date));
         setDays(arr);
-        func2(arr);
+        getTasks(arr);
         setCount(count + 7);
-    };
-
-    const dragOverHandler = (e) => {
-        e.preventDefault();
-        e.currentTarget.classList.add('grey');
-    };
-
-    const dragLeaveHandler = (e) => {
-        e.currentTarget.classList.remove('grey');
-    };
-
-    const dragStartHandler = (e, trIndex, tdIndex) => {
-        reset();
-        setCurrentTr(trIndex);
-        setCurrentTd(tdIndex);
-    };
-
-    const dragEndHandler = (e) => {
-        e.currentTarget.classList.remove('grey');
     };
 
     const rewriteStorage = (tdIndex, trIndex, clone) => {
@@ -236,6 +182,25 @@ function App() {
         }
     };
 
+    const dragOverHandler = (e) => {
+        e.preventDefault();
+        e.currentTarget.classList.add('grey');
+    };
+
+    const dragLeaveHandler = (e) => {
+        e.currentTarget.classList.remove('grey');
+    };
+
+    const dragStartHandler = (e, trIndex, tdIndex) => {
+        reset();
+        setCurrentTr(trIndex);
+        setCurrentTd(tdIndex);
+    };
+
+    const dragEndHandler = (e) => {
+        e.currentTarget.classList.remove('grey');
+    };
+
     const dropHandler = (e, trIndex, tdIndex) => {
         e.preventDefault();
         const clone = structuredClone(tasks);
@@ -247,13 +212,74 @@ function App() {
         rewriteStorage(tdIndex, trIndex, clone);
     };
 
+    const getTasks = (arr2) => {
+        const m = 24;
+        const arr = new Array(m);
+        for (var i = 0; i < m; i++) {
+            arr[i] = ['', '', '', '', '', '', ''];
+        }
+        const storageItem = localStorage.getItem('items');
+        if (storageItem) {
+            const storage = JSON.parse(storageItem);
+            storage.forEach((element) => {
+                const index = arr2.findIndex((item) => item[0] == element.date);
+                arr[element.time][index] = element.value;
+            });
+        }
+        setTasks(arr);
+    };
+
+    const getWeek = (weekDay, monthDay, month, year) => {
+        const countDayOnMonth = [
+            31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+        ];
+        const result = [];
+        let countMonthDay;
+
+        if (weekDay > 1) {
+            countMonthDay = monthDay - (weekDay - 1);
+        } else if (weekDay === 0) {
+            countMonthDay = monthDay - 6;
+        } else {
+            countMonthDay = monthDay;
+        }
+        for (let i = 0; i < 7; i++) {
+            if (countMonthDay + i > countDayOnMonth[month]) {
+                const count = 7 - i;
+                for (let j = 1; j <= count; j++)
+                    result.push([new Date(year, month, j), j]);
+                break;
+            } else {
+                result.push([
+                    new Date(year, month, countMonthDay + i),
+                    countMonthDay + i,
+                ]);
+            }
+        }
+        return result;
+    };
+
+    useEffect(() => {
+        const date = new Date();
+        const arr = getWeek(...func(date));
+        setDays(arr);
+        getTasks(arr);
+        setToday(date);
+        const closeEsc = (e) => {
+            if (e.keyCode === 27) {
+                reset();
+            }
+        };
+        window.addEventListener('keydown', closeEsc);
+        return () => window.removeEventListener('keydown', closeEsc);
+    }, []);
+
     return (
-        <div className="calendar">
-            <div className="calendar__head">
+        <Calendar>
+            <CalendarHead>
                 <h1 className="calendar__title">Interview Calendar</h1>
                 {trActive !== null && tdActive !== null && (
-                    <button
-                        className="calendar__head-btn"
+                    <CalendarHeadBtn
                         onClick={() => {
                             const value = prompt(
                                 'Введите ваше событие:',
@@ -276,12 +302,12 @@ function App() {
                                 fill="#333333"
                             />
                         </svg>
-                    </button>
+                    </CalendarHeadBtn>
                 )}
-            </div>
+            </CalendarHead>
             <div className="calendar__date">
                 <div className="calendar__block">
-                    {block.map((item, index) => (
+                    {daysWeek.map((item, index) => (
                         <span key={index}>{item}</span>
                     ))}
                 </div>
@@ -360,7 +386,7 @@ function App() {
                     </button>
                 )}
             </div>
-        </div>
+        </Calendar>
     );
 }
 
