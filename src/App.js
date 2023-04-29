@@ -307,33 +307,36 @@ function App() {
     };
 
     const getWeek = (weekDay, monthDay, month, year) => {
-        console.log(weekDay, monthDay, month, year);
         const countDayOnMonth = [
             31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
         ];
         const result = [];
-        let countMonthDay;
-
-        if (weekDay > 1) {
-            countMonthDay = monthDay - (weekDay - 1);
-        } else if (weekDay === 0) {
-            countMonthDay = monthDay - 6;
-        } else {
-            countMonthDay = monthDay;
-        }
-        console.log(weekDay, countMonthDay);
-        for (let i = 0; i < 7; i++) {
-            if (countMonthDay + i > countDayOnMonth[month]) {
+        let a = monthDay;
+        for (let i = weekDay; i <= 7; i++) {
+            if (a > countDayOnMonth[month]) {
                 const count = 7 - i;
-                for (let j = 1; j <= count; j++)
-                    result.push([new Date(year, month, j), j]);
+                for (let j = 0; j <= count; j++) {
+                    result[i - 1] = [new Date(year, month + 1, j + 1), j + 1];
+                    i = i + 1;
+                }
                 break;
-            } else {
-                result.push([
-                    new Date(year, month, countMonthDay + i),
-                    countMonthDay + i,
-                ]);
             }
+            result[i - 1] = [new Date(year, month, a), a];
+            a = a + 1;
+        }
+        for (let i = weekDay - 1; i >= 1; i--) {
+            monthDay = monthDay - 1;
+            if (monthDay < 1) {
+                const count = i;
+                let a = countDayOnMonth[month - 1];
+                for (let j = 1; j <= count; j++) {
+                    result[i - 1] = [new Date(year, month - 1, a), a];
+                    a = a - 1;
+                    i = i - 1;
+                }
+                break;
+            }
+            result[i - 1] = [new Date(year, month, monthDay), monthDay];
         }
         return result;
     };
