@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Td } from './components/Td';
 import styled from 'styled-components';
-import './App.css';
 import './css/null.css';
 
 const Calendar = styled.div`
@@ -13,14 +12,14 @@ const Calendar = styled.div`
     border-radius: 5px;
 `;
 
-const CalendarHead = styled.div`
+const Head = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 25px 48px 46px 48px;
     align-items: center;
 `;
 
-const CalendarHeadBtn = styled.button`
+const HeadBtn = styled.button`
     background-color: transparent;
     & svg {
         width: 28px;
@@ -31,7 +30,7 @@ const CalendarHeadBtn = styled.button`
     }
 `;
 
-const CalendarTitle = styled.h1`
+const Title = styled.h1`
     font-size: 36px;
     font-weight: 300;
     word-spacing: 5px;
@@ -40,7 +39,7 @@ const CalendarTitle = styled.h1`
     }
 `;
 
-const CalendarDate = styled.div`
+const Date = styled.div`
     padding: 17px 10px 10px 80px;
     background-color: #f6f6f6;
     border-top: 2px solid #ebebeb;
@@ -56,7 +55,7 @@ const CalendarBlock = styled.div`
     font-weight: 600;
 `;
 
-const CalendarDays = styled.div`
+const Days = styled.div`
     display: flex;
     justify-content: space-around;
     padding-top: 10px;
@@ -82,7 +81,7 @@ const CalendarDays = styled.div`
     }
 `;
 
-const CalendarNext = styled.button`
+const Next = styled.button`
     background-color: transparent;
     &:before {
         content: '';
@@ -95,7 +94,7 @@ const CalendarNext = styled.button`
     }
 `;
 
-const CalendarPrev = styled.button`
+const Prev = styled.button`
     background-color: transparent;
     &:before {
         content: '';
@@ -108,20 +107,20 @@ const CalendarPrev = styled.button`
     }
 `;
 
-const CalendarFlex = styled.div`
+const Flex = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 8px 32px;
 `;
 
-const CalendarMonthYear = styled.span`
+const MonthYear = styled.span`
     font-size: 24px;
     @media (max-width: 480px) {
         font-size: 18px;
     }
 `;
 
-const CalendarTable = styled.table`
+const Table = styled.table`
     margin-top: -2px;
     margin-left: 80px;
     border-collapse: collapse;
@@ -157,10 +156,50 @@ const CalendarTable = styled.table`
     }
 `;
 
-const CalendarTasks = styled.div`
+const Tasks = styled.div`
     max-height: 775px;
     overflow-y: auto;
     position: relative;
+`;
+
+const Time = styled.div`
+    padding-left: 16px;
+    position: absolute;
+    height: 1534px;
+    transform: translateY(-12px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    & span {
+        color: #c0c0c0;
+        font-size: 20px;
+        font-weight: 600;
+        &:first-child {
+            transform: translateY(10px);
+        }
+        &:last-child {
+            transform: translateY(-10px);
+        }
+        @media (max-width: 480px) {
+            font-size: 14px;
+        }
+    }
+`;
+
+const Footer = styled.div`
+    background-color: #f6f6f6;
+    border-top: 2px solid #ebebeb;
+    padding: 30px 45px;
+    margin-top: -13px;
+    z-index: 0;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    & span,
+    & button {
+        color: red;
+        font-size: 28px;
+    }
 `;
 
 function App() {
@@ -414,10 +453,10 @@ function App() {
 
     return (
         <Calendar>
-            <CalendarHead>
-                <CalendarTitle>Interview Calendar</CalendarTitle>
+            <Head>
+                <Title>Interview Calendar</Title>
                 {trActive !== null && tdActive !== null && (
-                    <CalendarHeadBtn
+                    <HeadBtn
                         onClick={() => {
                             const value = prompt(
                                 'Введите ваше событие:',
@@ -440,16 +479,16 @@ function App() {
                                 fill="#333333"
                             />
                         </svg>
-                    </CalendarHeadBtn>
+                    </HeadBtn>
                 )}
-            </CalendarHead>
-            <CalendarDate>
+            </Head>
+            <Date>
                 <CalendarBlock>
                     {daysWeek.map((item, index) => (
                         <span key={index}>{item}</span>
                     ))}
                 </CalendarBlock>
-                <CalendarDays>
+                <Days>
                     {days &&
                         today &&
                         days.map((item, index) => (
@@ -463,24 +502,20 @@ function App() {
                                 {item[1]}
                             </span>
                         ))}
-                </CalendarDays>
-                <CalendarFlex>
-                    <CalendarNext
-                        onClick={() => prevClickHandler()}
-                    ></CalendarNext>
-                    <CalendarMonthYear>{amount}</CalendarMonthYear>
-                    <CalendarPrev
-                        onClick={() => nextClickHandler()}
-                    ></CalendarPrev>
-                </CalendarFlex>
-            </CalendarDate>
-            <CalendarTasks>
-                <div className="calendar__time">
+                </Days>
+                <Flex>
+                    <Next onClick={() => prevClickHandler()}></Next>
+                    <MonthYear>{amount}</MonthYear>
+                    <Prev onClick={() => nextClickHandler()}></Prev>
+                </Flex>
+            </Date>
+            <Tasks>
+                <Time>
                     {time.map((item, index) => (
                         <span key={index}>{item}</span>
                     ))}
-                </div>
-                <CalendarTable>
+                </Time>
+                <Table>
                     <tbody>
                         {tasks &&
                             tasks.map((item, trIndex) => (
@@ -508,9 +543,9 @@ function App() {
                                 </tr>
                             ))}
                     </tbody>
-                </CalendarTable>
-            </CalendarTasks>
-            <div className="calendar__footer">
+                </Table>
+            </Tasks>
+            <Footer>
                 <span>Today</span>
                 {active && (
                     <button
@@ -521,7 +556,7 @@ function App() {
                         Delete
                     </button>
                 )}
-            </div>
+            </Footer>
         </Calendar>
     );
 }
