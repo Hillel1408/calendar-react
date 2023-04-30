@@ -1,48 +1,3 @@
-.calendar__flex {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 32px;
-}
-.calendar__month-year {
-    font-size: 24px;
-}
-.calendar__table tr td {
-    border: 2px solid #ebebeb;
-    width: 80px;
-    height: 63px;
-}
-.calendar__table tr td:first-child {
-    border-left: none;
-}
-.calendar__table tr td:last-child {
-    border-right: none;
-}
-.calendar__table tr td span {
-    display: block;
-    border: 2px solid white;
-    width: 100%;
-    height: 100%;
-}
-.calendar__table tr td.active span {
-    background-color: #ebecfe;
-    cursor: grab;
-}
-.calendar__table tr td.selected span {
-    background-color: #b3b7fd;
-}
-.calendar__table tr td span.grey {
-    background-color: grey;
-}
-.calendar__table {
-    margin-top: -2px;
-    margin-left: 80px;
-    border-collapse: collapse;
-}
-.calendar__tasks {
-    max-height: 775px;
-    overflow-y: auto;
-    position: relative;
-}
 .calendar__time {
     padding-left: 16px;
     position: absolute;
@@ -63,6 +18,11 @@
 .calendar__time span:last-child {
     transform: translateY(-10px);
 }
+@media (max-width: 480px) {
+    .calendar__time span {
+        font-size: 14px;
+    }
+}
 .calendar__footer {
     background-color: #f6f6f6;
     border-top: 2px solid #ebebeb;
@@ -77,15 +37,4 @@
 .calendar__footer button {
     color: red;
     font-size: 28px;
-}
-@media (max-width: 480px) {
-    .calendar__time span {
-        font-size: 14px;
-    }
-    .calendar__table {
-        margin-left: 60px;
-    }
-    .calendar__month-year {
-        font-size: 18px;
-    }
 }

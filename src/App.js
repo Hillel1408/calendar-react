@@ -108,6 +108,61 @@ const CalendarPrev = styled.button`
     }
 `;
 
+const CalendarFlex = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 32px;
+`;
+
+const CalendarMonthYear = styled.span`
+    font-size: 24px;
+    @media (max-width: 480px) {
+        font-size: 18px;
+    }
+`;
+
+const CalendarTable = styled.table`
+    margin-top: -2px;
+    margin-left: 80px;
+    border-collapse: collapse;
+    & tr td {
+        border: 2px solid #ebebeb;
+        width: 80px;
+        height: 63px;
+        &:first-child {
+            border-left: none;
+        }
+        &:last-child {
+            border-right: none;
+        }
+        & span {
+            display: block;
+            border: 2px solid white;
+            width: 100%;
+            height: 100%;
+            &.grey {
+                background-color: grey;
+            }
+        }
+        &.active span {
+            background-color: #ebecfe;
+            cursor: grab;
+        }
+        &.selected span {
+            background-color: #b3b7fd;
+        }
+    }
+    @media (max-width: 480px) {
+        margin-left: 60px;
+    }
+`;
+
+const CalendarTasks = styled.div`
+    max-height: 775px;
+    overflow-y: auto;
+    position: relative;
+`;
+
 function App() {
     const [tasks, setTasks] = useState('');
     const [trActive, setTrActive] = useState(null);
@@ -312,6 +367,7 @@ function App() {
         ];
         const result = [];
         let a = monthDay;
+        if (weekDay === 0) weekDay = 7;
         for (let i = weekDay; i <= 7; i++) {
             if (a > countDayOnMonth[month]) {
                 const count = 7 - i;
@@ -408,23 +464,23 @@ function App() {
                             </span>
                         ))}
                 </CalendarDays>
-                <div className="calendar__flex">
+                <CalendarFlex>
                     <CalendarNext
                         onClick={() => prevClickHandler()}
                     ></CalendarNext>
-                    <span className="calendar__month-year">{amount}</span>
+                    <CalendarMonthYear>{amount}</CalendarMonthYear>
                     <CalendarPrev
                         onClick={() => nextClickHandler()}
                     ></CalendarPrev>
-                </div>
+                </CalendarFlex>
             </CalendarDate>
-            <div className="calendar__tasks">
+            <CalendarTasks>
                 <div className="calendar__time">
                     {time.map((item, index) => (
                         <span key={index}>{item}</span>
                     ))}
                 </div>
-                <table className="calendar__table">
+                <CalendarTable>
                     <tbody>
                         {tasks &&
                             tasks.map((item, trIndex) => (
@@ -452,8 +508,8 @@ function App() {
                                 </tr>
                             ))}
                     </tbody>
-                </table>
-            </div>
+                </CalendarTable>
+            </CalendarTasks>
             <div className="calendar__footer">
                 <span>Today</span>
                 {active && (
