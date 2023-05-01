@@ -140,7 +140,7 @@ const Table = styled.table`
             width: 100%;
             height: 100%;
             &.grey {
-                background-color: grey;
+                background-color: grey !important;
             }
         }
         &.active span {
