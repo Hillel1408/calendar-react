@@ -9,7 +9,6 @@ function Td({
     trActive,
     tdActive,
     setActive,
-    dragEndHandler,
     dragStartHandler,
     draggable,
     dropHandler,
@@ -19,6 +18,9 @@ function Td({
         e.currentTarget.classList.add('grey');
     };
     const dragLeaveHandler = (e) => {
+        e.currentTarget.classList.remove('grey');
+    };
+    const dragEndHandler = (e) => {
         e.currentTarget.classList.remove('grey');
     };
     return (

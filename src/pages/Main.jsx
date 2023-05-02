@@ -359,10 +359,6 @@ function Main() {
         setCurrentTd(tdIndex);
     };
 
-    const dragEndHandler = (e) => {
-        e.currentTarget.classList.remove('grey');
-    };
-
     const dropHandler = (e, trIndex, tdIndex) => {
         e.preventDefault();
         const clone = structuredClone(tasks);
@@ -536,7 +532,6 @@ function Main() {
                                             trActive={trActive}
                                             tdActive={tdActive}
                                             setActive={setActive}
-                                            dragEndHandler={dragEndHandler}
                                             draggable={true}
                                             dragStartHandler={dragStartHandler}
                                             dropHandler={dropHandler}
