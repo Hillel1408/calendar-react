@@ -426,14 +426,14 @@ function Main() {
     useEffect(() => {
         const date = new Date();
         const arr = getWeek(...func(date));
-        setDays(arr);
-        getTasks(arr);
-        setToday(date);
         const closeEsc = (e) => {
             if (e.keyCode === 27) {
                 reset();
             }
         };
+        setDays(arr);
+        getTasks(arr);
+        setToday(date);
         window.addEventListener('keydown', closeEsc);
         return () => window.removeEventListener('keydown', closeEsc);
     }, []);
