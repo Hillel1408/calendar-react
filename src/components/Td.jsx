@@ -9,13 +9,18 @@ function Td({
     trActive,
     tdActive,
     setActive,
-    dragLeaveHandler,
     dragEndHandler,
-    dragOverHandler,
     dragStartHandler,
     draggable,
     dropHandler,
 }) {
+    const dragOverHandler = (e) => {
+        e.preventDefault();
+        e.currentTarget.classList.add('grey');
+    };
+    const dragLeaveHandler = (e) => {
+        e.currentTarget.classList.remove('grey');
+    };
     return (
         <td
             onClick={() => {

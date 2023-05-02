@@ -353,15 +353,6 @@ function Main() {
         }
     };
 
-    const dragOverHandler = (e) => {
-        e.preventDefault();
-        e.currentTarget.classList.add('grey');
-    };
-
-    const dragLeaveHandler = (e) => {
-        e.currentTarget.classList.remove('grey');
-    };
-
     const dragStartHandler = (e, trIndex, tdIndex) => {
         reset();
         setCurrentTr(trIndex);
@@ -547,8 +538,6 @@ function Main() {
                                             setActive={setActive}
                                             dragEndHandler={dragEndHandler}
                                             draggable={true}
-                                            dragOverHandler={dragOverHandler}
-                                            dragLeaveHandler={dragLeaveHandler}
                                             dragStartHandler={dragStartHandler}
                                             dropHandler={dropHandler}
                                             reset={reset}
